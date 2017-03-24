@@ -10,19 +10,20 @@ int wrap_instr_packet(rcip_instr_pack_t **packet, int _instr, int _pow)
 {
 	/*	allocate memory for a packet and handle allocation error	*/
 	*(packet) = malloc(sizeof(rcip_instr_pack_t));
-	if(*(packet) == NULL)
+	if(*packet == NULL)
 	{
 		return -1;		
 	}
-	
-	*(packet)->instr = _instr;
-	*(packet)->pow = _pow;	
+
+	(*packet)->instr = _instr;
+	(*packet)->pow = _pow;	
 	
 	return 0;
 }
 
-
-int unwrap_data_packet()
+/*	TODO add to this function's declaration two chars for parsing them/
+int unwrap_data_packet(rcip_data_pack_t **packet)
 {
-
+	
 }
+*/
