@@ -11,11 +11,10 @@ typedef struct rcip_instruction_packet
 
 /*	packet from low-level board
  *	size: 8 bytes	*/
-/*TODO need to find out how many sensors do we have onboard */
 typedef struct rcip_data_packet
 {
-	unsigned char usrf_data[2];	//	two ultrasonic sensors
-	unsigned char ir_data[2];	//	two infrared sensors		
+	unsigned char usrf_data;	//	two ultrasonic sensors
+	unsigned char ir_data;	//	two infrared sensors		
 } rcip_data_pack_t;
 
 
