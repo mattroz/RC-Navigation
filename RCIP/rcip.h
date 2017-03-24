@@ -5,8 +5,8 @@
  *	size: 2 bytes	*/
 typedef struct rcip_instruction_packet
 {
-	unsigned char instr;
-	signed char pow;
+	signed char left_engine;
+	signed char right_engine;
 } rcip_instr_pack_t;
 
 
@@ -15,11 +15,11 @@ typedef struct rcip_instruction_packet
  *	size: 2 bytes	*/
 typedef struct rcip_data_packet
 {
-	unsigned char usrf_data;	//	one ultrasonic sensors
-	unsigned char ir_data;		//	one infrared sensors		
+	unsigned char usrf_data;	//	one ultrasonic sensor
+	unsigned char ir_data;		//	one infrared sensor		
 } rcip_data_pack_t;
 
-
+/*	this enumerator won't be using for awhile	*/
 enum instruction
 {
 	BACK = 0b000,
