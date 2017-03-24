@@ -9,12 +9,14 @@ typedef struct rcip_instruction_packet
 	signed char pow;
 } rcip_instr_pack_t;
 
+
+
 /*	packet from low-level board
- *	size: 8 bytes	*/
+ *	size: 2 bytes	*/
 typedef struct rcip_data_packet
 {
-	unsigned char usrf_data;	//	two ultrasonic sensors
-	unsigned char ir_data;	//	two infrared sensors		
+	unsigned char usrf_data;	//	one ultrasonic sensors
+	unsigned char ir_data;		//	one infrared sensors		
 } rcip_data_pack_t;
 
 
@@ -26,6 +28,10 @@ enum instruction
 	FORWARD = 0b011,
 	STOP = 0b111
 };
+
+/*	declare functions for packets wrapping and unwrapping	*/
+int wrap_instr_packet(rcip_instr_pack_t**, int, int);
+int unwrap_data_packet(rcip_data_pack_t**);
 
 
 #endif
