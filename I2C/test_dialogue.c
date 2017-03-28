@@ -13,7 +13,7 @@ static const char *filename = "/dev/i2c-1";
 int main(int argc, char **argv)
 {
 	int file_i2c;
-	int length = 3;
+	int length = 4;
 	int res;
 	unsigned char *buffer = malloc(sizeof(unsigned char) * length);
 	rcip_instr_pack_t *ipacket;
@@ -45,16 +45,13 @@ int main(int argc, char **argv)
 	else if(argv[1][0] == 'w')	
 	{
 		//	WRITE BYTES
-		wrap_instr_packet(&ipacket, atoi(argv[2]), atoi(argv[3]));
-		unsigned char symbol = 0b00011011;
-		size_t counter = 0;
-		//while(counter++ != 3)
-		//{
-			write(file_i2c, ipacket, 2);	
-			printf("%d\n", *ipacket);
-		//}
-		printf("Failed to write data to i2c\n");
-		exit(EXIT_FAILURE);
+		wrap_instr_packet(&ipacket, atoi(argv[2]), atoi(argv[3]));	
+		if(write(file_i2c, ipacket, sizeof *ipacket) != sizeof *ipacket)
+		{
+			printf("Failed to write data to i2c\n");
+			exit(EXIT_FAILURE);
+		} 	
+		printf("%d\n", *ipacket);
 	}
 
 	return 0;
