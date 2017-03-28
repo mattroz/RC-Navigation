@@ -19,7 +19,8 @@ typedef struct rcip_data_packet
 	unsigned char ir_data;		//	one infrared sensor		
 } rcip_data_pack_t;
 
-/*	this enumerator won't be using for awhile	*/
+
+/*	this enumerator won't be used for awhile	*/
 enum instruction
 {
 	BACK = 0b000,
