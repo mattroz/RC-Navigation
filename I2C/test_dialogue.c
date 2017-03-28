@@ -6,14 +6,17 @@
 #include <sys/ioctl.h>			
 #include <linux/i2c-dev.h>		
 
+#include "../RCIP/rcip.h"
+
 static const char *filename = "/dev/i2c-1";
 
 int main(int argc, char **argv)
 {
 	int file_i2c;
-	int length = 2;
+	int length = 3;
 	int res;
-	signed char *buffer = malloc(sizeof(signed char) * length);
+	unsigned char *buffer = malloc(sizeof(unsigned char) * length);
+	rcip_instr_pack_t *ipacket;
 
 	if ((file_i2c = open(filename, O_RDWR)) < 0)
 	{
@@ -42,11 +45,16 @@ int main(int argc, char **argv)
 	else if(argv[1][0] == 'w')	
 	{
 		//	WRITE BYTES
-		*buffer = 0x64;
-		while(write(file_i2c, buffer, 1) == 1)		
-		{
-			printf("%s\n", buffer);
-		}
+		wrap_instr_packet(&ipacket, atoi(argv[2]), atoi(argv[3]));
+		unsigned char symbol = 0b00011011;
+		size_t counter = 0;
+		//while(counter++ != 3)
+		//{
+			write(file_i2c, ipacket, 2);	
+			printf("%d\n", *ipacket);
+		//}
+		printf("Failed to write data to i2c\n");
+		exit(EXIT_FAILURE);
 	}
 
 	return 0;
