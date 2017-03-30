@@ -3,13 +3,36 @@
 
 #include <stdint.h>
 
-#define RPI_VERSION 3
-#define PC104_VERSION 1
+#ifndef RPI_VERSION
+#	define RPI_VERSION 3
+#else
+#	error "Multiple definitions detected, should be defined once"
+#endif
+
+#ifndef PC104_VERSION
+#	define PC104_VERSION 1
+#else 
+#	error "Multiple definitions detected, should be defined once"
+#endif
 
 /*	define default settings	*/
-#define DEFAULT_I2C_PATH "/dev/i2c-1"
-#define DEFAULT_PIPE_PATH "/var/run/raspi_pipe"
-#define DEFAULT_PC104_I2C_SLAVE_ADDR 0x02
+#ifndef DEFAULT_I2C_PATH
+#	define DEFAULT_I2C_PATH "/dev/i2c-1"
+#else
+#	error "Multiple definitions detected, should be defined once"
+#endif
+
+#ifndef DEFAULT_PIPE_PATH
+#	define DEFAULT_PIPE_PATH "/var/run/raspi_pipe"
+#else
+#	error "Multiple definitions detected, should be defined once"
+#endif
+
+#ifndef DEFAULT_PC104_I2C_SLAVE_ADDR
+#	define DEFAULT_PC104_I2C_SLAVE_ADDR 0x02
+#else
+#   error "Multiple definitions detected, should be defined once"
+#endif
 
 /*	Raspberry Pi context declaration	*/
 typedef struct RPiContext
