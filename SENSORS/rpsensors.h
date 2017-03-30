@@ -3,7 +3,11 @@
 
 #include <stdint.h>
 
-#define USRF_MAX_VAL_CM 300
+#ifndef USRF_MAX_VAL_CM
+#	define USRF_MAX_VAL_CM 300
+#else
+#	error "Multiple definitions, should be defined once"
+#endif
 
 /*	HC-SR04 ultrasonic rangefinder variables declarations	*/
 const uint8_t PIN_USRF_TRIG;
