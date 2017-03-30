@@ -5,7 +5,9 @@
 
 #include "rpsensors.h"
 
-#define COEFF 58
+#ifndef USRF_COEFF
+#	define USRF_COEFF 58
+#endif
 
 const uint8_t PIN_USRF_TRIG = 5;
 const uint8_t PIN_USRF_ECHO = 4;
@@ -41,7 +43,7 @@ int get_distance_in_cm()
 	long travelTime = micros() - startTime;
 
 	/*	convert distance in cm	*/
-	int distance = travelTime / COEFF;
+	int distance = travelTime / USRF_COEFF;
 
 	return distance;
 }
