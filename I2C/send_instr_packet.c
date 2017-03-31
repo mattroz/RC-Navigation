@@ -49,6 +49,8 @@ int main()
 		exit(EXIT_FAILURE);
 	}
 	printf("%d %d\n", ipacket->left_engine, ipacket->right_engine);
-	
+
+	close(file_i2c);
+		
 	return 0;
 }

@@ -53,6 +53,8 @@ int main()
 		unsigned long numerical_part = atoi(buffer);
 		printf("Data read: %lu\n", numerical_part);
 	}
+	
+	close(file_i2c);
 
     return 0;
 }
