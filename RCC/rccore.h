@@ -40,6 +40,7 @@ typedef struct RPiContext
 	uint8_t version;
 	char *i2c_path;
 	char *pipe_path;
+	uint8_t last_error;
 } RPiContext;
 
 
@@ -48,6 +49,7 @@ typedef struct PC104Context
 {
 	uint8_t version;
 	uint16_t i2c_slave_addr;
+	uint8_t last_error;
 } PC104Context;
 
 
