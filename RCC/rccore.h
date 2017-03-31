@@ -3,6 +3,18 @@
 
 #include <stdint.h>
 
+#ifndef RASPBERRY
+#	define _RASPBERRY_ "raspberry"
+#else
+#	error "Multiple definitions detected, should be defined once"
+#endif
+
+#ifndef _PC104_
+#   define _PC104_ "pc104"
+#else
+#   error "Multiple definitions detected, should be defined once"
+#endif
+
 #ifndef RPI_VERSION
 #	define RPI_VERSION 3
 #else
@@ -38,9 +50,11 @@
 typedef struct RPiContext
 {
 	uint8_t version;
+	char *identifier;
 	char *i2c_path;
 	char *pipe_path;
 	uint8_t last_error;
+	
 } RPiContext;
 
 
@@ -48,6 +62,7 @@ typedef struct RPiContext
 typedef struct PC104Context
 {
 	uint8_t version;
+	char *identifier;
 	uint16_t i2c_slave_addr;
 	uint8_t last_error;
 } PC104Context;
@@ -58,5 +73,10 @@ int rpi_init(RPiContext**);
 void rpi_destruct(RPiContext*);
 int pc104_init(PC104Context**);
 void pc104_destruct(PC104Context*);
+
+
+/*	TODO structures and functions for error handling	*/
+void rc_err_handle(void*);
+
 
 #endif
