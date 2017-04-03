@@ -14,16 +14,14 @@ int main()
     PC104Context *PC104;
 
     /*  initialize contexts */
-    if(rpi_init(&RPi) == -1)
+    if(rpi_init(&RPi) == RC_EINIT)
     {
-        perror("Failed to initialize Raspberry Pi context");
-        exit(EXIT_FAILURE);
+		rcerror(RC_EINIT);
     }
 
-    if(pc104_init(&PC104) == -1)
+    if(pc104_init(&PC104) == RC_EINIT)
     {
-        perror("Failed to initialize PC104 context");
-        exit(EXIT_FAILURE);
+		rcerror(RC_EINIT);
     }
 
     /*  open I2C connection */

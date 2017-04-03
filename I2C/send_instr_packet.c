@@ -14,16 +14,14 @@ int main()
 	PC104Context *PC104;
 
 	/*	initialize contexts	*/
-	if(rpi_init(&RPi) == -1)
+	if(rpi_init(&RPi) == RC_EINIT)
 	{
-		perror("Failed to initialize Raspberry Pi context");
-		exit(EXIT_FAILURE);
+		rcerror(RC_EINIT);
 	}
 	
-	if(pc104_init(&PC104) == -1)
+	if(pc104_init(&PC104) == RC_EINIT)
 	{
-		perror("Failed to initialize PC104 context");
-		exit(EXIT_FAILURE);
+		rcerror(RC_EINIT);
 	}
 	
 	/*	open I2C connection	*/	
@@ -42,7 +40,13 @@ int main()
 	
 	/*	wrap instruction packet and send it via I2C	*/
 	rcip_instr_pack_t *ipacket;
-	wrap_instr_packet(&ipacket, 30, 30);
+	
+	int wrap_stat;
+	if((wrap_stat = wrap_instr_packet(&ipacket, 30, 30)) != RC_SUCCESS)
+	{
+		rcerror(wrap_stat);	
+	}
+
 	if(write(file_i2c, ipacket, sizeof *ipacket) != sizeof *ipacket)
 	{
 		perror("Failed to write data to i2c");
