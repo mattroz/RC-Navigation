@@ -73,18 +73,18 @@ typedef enum RCErrorCode
 	RC_SUCCESS,		/*	return on success	*/
 	RC_EINIT,		/*	initialization error	*/
 	RC_EALLOC,		/*	memory allocation error	*/
-	RC_EPIPE_CREATE,/*	pipe creating error	*/		
-	RC_EPIPE_READ,	/*	error reading value from pipe	*/
-	RC_EPIPE_WRITE,	/*	error writing value to pipe	*/		
+	RC_EPIPE_CREATE,	/*	pipe creating error	*/		
+	RC_EPIPE_READ,		/*	error reading value from pipe	*/
+	RC_EPIPE_WRITE,		/*	error writing value to pipe	*/		
 } rc_errcode_t;
 
 
 /*	RoboCake error messages	*/
 static char *RCErrorMessage[] = {
-	"Initialization succeed",			/*	RC_SUCCESS	*/
-	"Initialization failed",			/*	RC_EINIT	*/
+	"Initialization succeed",		/*	RC_SUCCESS	*/
+	"Initialization failed",		/*	RC_EINIT	*/
 	"Failed to allocate memory",		/*	RC_EALLOC	*/
-	"Failed creating pipe",				/*	RC_EPIPE_CREATE	*/
+	"Failed creating pipe",			/*	RC_EPIPE_CREATE	*/
 	"Failed reading value from pipe",	/*	RC_EPIPE_READ	*/
 	"Failed writing value to pipe"		/*	RC_EPIPE_WRITE	*/
 };
