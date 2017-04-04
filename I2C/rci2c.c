@@ -17,6 +17,8 @@ int open_i2c(RPiContext *rpi, PC104Context *pc104)
 	
 	/*	try to access i2c bus	*/
 	rpi->i2c_bus_descriptor = open(rpi->i2c_path, O_RDWR);
+	pc104->i2c_bus_descriptor = rpi->i2c_bus_descriptor;
+
 	if(rpi->i2c_bus_descriptor < 0) 
 	{	
 		rpi->last_error = RC_I2C_EOPEN;
@@ -76,6 +78,7 @@ int receive_from_slave_via_i2c(PC104Context *pc104)
 
 	if(pc104->i2c_bus_descriptor < 0) 
 	{
+		pc104->last_error = RC_I2C_EOPEN;
 		return RC_I2C_EOPEN;
 	}
 
@@ -85,10 +88,11 @@ int receive_from_slave_via_i2c(PC104Context *pc104)
 	int status = read(pc104->i2c_bus_descriptor, buffer, length);
 	if(status != length) 
 	{
+		pc104->last_error = RC_I2C_EREAD;
 		return RC_I2C_EREAD;
 	}
 
 	pc104->distance_from_IR_sensor = atoi(buffer);
     
-	return E_SUCCESS;
+	return RC_SUCCESS;
 }

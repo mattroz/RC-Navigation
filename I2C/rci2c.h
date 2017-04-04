@@ -14,7 +14,7 @@ int open_i2c(RPiContext*, PC104Context*);
 int send_to_slave_via_i2c(RPiContext*, int, int);
 
 /*	TODO Receive data from Sharp which is on the PC104 board	*/
-int receive_from_slave_via_i2c();
+int receive_from_slave_via_i2c(PC104Context*);
 
 
 #endif
