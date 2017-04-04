@@ -4,13 +4,13 @@
 #include <stdint.h>
 
 #ifndef RASPBERRY
-#	define _RASPBERRY_ "raspberry"
+#	define _RASPBERRY_ "RASPBERRY"
 #else
 #	error "Multiple definitions detected, should be defined once"
 #endif
 
 #ifndef _PC104_
-#   define _PC104_ "pc104"
+#   define _PC104_ "PC104"
 #else
 #   error "Multiple definitions detected, should be defined once"
 #endif
@@ -90,7 +90,7 @@ typedef struct PC104Context
 	context which caused an error.	*/
 typedef struct RCErrorContext
 {
-	rc_errcode_t last_error_code;
+	int last_error_code;
 	char *last_error_message;	
 	char *culprit_context;	
 } RCErrorContext;
@@ -107,8 +107,8 @@ typedef enum RCErrorCode
 	RC_PIPE_EWRITE,		/*	error writing value to pipe	*/		
 	RC_I2C_EOPEN,	/*	error opening i2c connection	*/
 	RC_I2C_EWRITE,	/*	error writing to slave via i2c	*/
-	RC_I2C_EREAD	/*	error reading value from i2c	*/
-	RC_I2C_ESLAVE	/*	slave detection error	*/
+	RC_I2C_EREAD,	/*	error reading value from i2c	*/
+	RC_I2C_ESLAVE	/*	slave detection error	*/	
 } rc_errcode_t;
 
 
@@ -134,7 +134,7 @@ void pc104_destruct(PC104Context*);
 
 
 /*	TODO structures and functions for error handling	*/
-void rcerror(RCErrorContext*, void*, int);
+void rcerror(RCErrorContext*, void*, int, int);
 
 
 #endif
