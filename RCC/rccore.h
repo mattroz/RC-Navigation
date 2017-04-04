@@ -46,6 +46,20 @@
 #   error "Multiple definitions detected, should be defined once"
 #endif
 
+#ifndef RC_EXIT
+#   define RC_EXIT 1
+#else
+#   error "Multiple definitions detected, should be defined once"
+#endif
+
+#ifndef RC_CONT
+#   define RC_CONT 0
+#else
+#   error "Multiple definitions detected, should be defined once"
+#endif
+
+
+
 /*	Raspberry Pi context declaration	*/
 typedef struct RPiContext
 {
