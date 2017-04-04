@@ -52,6 +52,7 @@ typedef struct RPiContext
 	uint8_t version;
 	char *identifier;
 	char *i2c_path;
+	uint16_t i2c_bus_descriptor,
 	char *pipe_path;
 	uint8_t last_error;	
 } RPiContext;
@@ -63,6 +64,7 @@ typedef struct PC104Context
 	uint8_t version;
 	char *identifier;
 	uint16_t i2c_slave_addr;
+	uint16_t i2c_bus_descriptor,
 	uint8_t last_error;
 } PC104Context;
 
