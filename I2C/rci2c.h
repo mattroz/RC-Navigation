@@ -11,7 +11,7 @@ int open_i2c(RPiContext*, PC104Context*);
 /*	Send values from Raspberry Pi to PC104 engines via i2c for navigation.	*/
 /*	arg1 and arg2 are the values passing to the left and right engines 
 	respectively	*/
-int send_to_slave_via_i2c(int, int);
+int send_to_slave_via_i2c(RPiContext*, int, int);
 
 /*	TODO Receive data from Sharp which is on the PC104 board	*/
 int receive_from_slave_via_i2c();
