@@ -78,6 +78,9 @@ typedef enum RCErrorCode
 	RC_EPIPE_CREATE,	/*	pipe creating error	*/		
 	RC_EPIPE_READ,		/*	error reading value from pipe	*/
 	RC_EPIPE_WRITE,		/*	error writing value to pipe	*/		
+	RC_I2C_EOPEN,	/*	error opening i2c connection	*/
+	RC_I2C_EWRITE,	/*	error writing to slave via i2c	*/
+	RC_I2C_EREAD	/*	error reading value from i2c	*/
 } rc_errcode_t;
 
 
