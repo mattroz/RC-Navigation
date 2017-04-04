@@ -38,28 +38,57 @@ int open_i2c(RPiContext *rpi, PC104Context *pc104)
 /*	Send values to PC104 board using i2c protocol	*/
 int send_to_slave_via_i2c(RPiContext *rpi, int l_engine, int r_engine)
 {
+	/*	check if context is not NULL and i2c connection've been opened	*/
+	if(rpi == NULL) return RC_EINIT;
+	if(rpi->i2c_bus_descriptor < 0) 
+	{
+		return RC_I2C_EOPEN; 
+	}
+
 	/*	wrap given values for engines to instruction packet	*/	
 	rcip_instr_pack_t *ipacket;
     int status =  wrap_instr_packet(&ipacket, l_engine, r_engine);
-	if(status != RC_SUCCESS)
-    {
-    	return status;
-    }
+	if(status != RC_SUCCESS) 
+	{
+		return status;
+	}
 
 	/*	try to send wrapped packet	*/
 	status = write(rpi->i2c_bus_descriptor, ipacket, sizeof *ipacket);
-    if(status != sizeof *ipacket)
-    {
+	if(status != sizeof *ipacket) 
+	{
 		return RC_I2C_EWRITE;
-    }
-	
+	}
+
 	free(ipacket);
 	return RC_SUCCESS;
 }
 
 
 /*	Receive data from Sharp IR sensor via i2c protocol	*/
-int receive_from_slave_via_i2c()
+int receive_from_slave_via_i2c(PC104Context *pc104)
 {
+	 /*  check if context is not NULL and i2c connection've been opened  */
+    if(pc104 == NULL) 
+	{
+		return RC_EINIT;
+    }
 
+	if(pc104->i2c_bus_descriptor < 0) 
+	{
+		return RC_I2C_EOPEN;
+	}
+
+	int length = 4;
+    unsigned char *buffer = malloc(sizeof(unsigned char) * length);
+	
+	int status = read(pc104->i2c_bus_descriptor, buffer, length);
+	if(status != length) 
+	{
+		return RC_I2C_EREAD;
+	}
+
+	pc104->distance_from_IR_sensor = atoi(buffer);
+    
+	return E_SUCCESS;
 }
