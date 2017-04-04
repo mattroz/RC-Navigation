@@ -7,6 +7,8 @@
 #include <fcntl.h>
 #include <errno.h>
 
+#include "../RCC/rccore.h"
+
 const char *pipepath = "/var/run/raspi_pipe";
 
 /*---------------------------------------
@@ -18,12 +20,12 @@ int create_pipe()
 	mode_t pipemode = 0666;
 	int status = mkfifo(pipepath, pipemode);
 	
-	if(errno == EEXIST)
+	if(errno == EEXIST && errno != -1)
 	{
-		return EXIT_SUCCESS;
+		return RC_SUCCESS;
 	}
 
-	return status;
+	return RC_EPIPE_CREATE;
 }
 
 

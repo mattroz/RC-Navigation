@@ -80,7 +80,7 @@ typedef struct PC104Context
 	char *identifier;
 	uint16_t i2c_slave_addr;
 	int i2c_bus_descriptor;
-	uint16_t distance_from_IR_sensor;
+	unsigned long distance_from_IR_sensor;
 	uint8_t last_error;
 } PC104Context;
 
@@ -133,7 +133,9 @@ int pc104_init(PC104Context**);
 void pc104_destruct(PC104Context*);
 
 
-/*	TODO structures and functions for error handling	*/
+/*	RoboCake error handler.	*/
+/*	Takes global error context pointer, pointer to RPi or PC104 context,
+	error code and exit flag (RC_EXIT, RC_CONT)	*/
 void rcerror(RCErrorContext*, void*, int, int);
 
 

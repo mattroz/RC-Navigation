@@ -64,7 +64,7 @@ void rcerror(RCErrorContext *error_context, void* culprit, int errcode, int stat
 		exit(EXIT_FAILURE);
 	}
 	
-	/*	check which context	caused an error	*/
+	/*	check which context	caused an error	(mad typecasting) */
 	if((culprit != NULL) && (((RPiContext*)culprit)->identifier == _RASPBERRY_))
 	{
 		error_context->culprit_context = _RASPBERRY_;
@@ -77,15 +77,19 @@ void rcerror(RCErrorContext *error_context, void* culprit, int errcode, int stat
 	{
 		error_context->culprit_context = "UNKNOWN";
 	}
-	
+
+	/*	set members of error context	*/	
 	error_context->last_error_code = errcode;
 	error_context->last_error_message = RCErrorMessage[errcode];
 	
-	puts("====== ERROR ======");
+	puts("=========== ERROR ===========");
 	fprintf(stderr, "Message: %s\nContext: %s\nError code: %d\n", 
-			RCErrorMessage[errcode], error_context->culprit_context, errcode);
-	puts("===================");
+					RCErrorMessage[errcode], 
+					error_context->culprit_context, 
+					errcode);
+	puts("=============================");
 	
+	/*	if user threw exit flag, just exit after printing error message	*/
 	if(status == RC_EXIT) 
 	{	
 		exit(EXIT_FAILURE);

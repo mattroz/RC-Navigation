@@ -2,6 +2,7 @@
 #include <unistd.h>
 
 #include "rcip.h"
+#include "../RCC/rccore.h"
 
 /*	Define instruction packet wrapping. 
  *	Since we only need to wrap instruction packets,
@@ -12,13 +13,13 @@ int wrap_instr_packet(rcip_instr_pack_t **packet, int leftval, int rightval)
 	*(packet) = malloc(sizeof(rcip_instr_pack_t));
 	if(*packet == NULL)
 	{
-		return -1;		
+		return RC_EALLOC;		
 	}
 
 	(*packet)->left_engine = leftval;
 	(*packet)->right_engine = rightval;	
 	
-	return 0;
+	return RC_SUCCESS;
 }
 
 /*	TODO add to this function's declaration two chars for parsing them/
