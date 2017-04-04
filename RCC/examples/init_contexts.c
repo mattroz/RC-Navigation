@@ -7,17 +7,16 @@ int main()
 {
 	RPiContext *rpi;
 	PC104Context *pc104;
+	RCErrorContext *errcont = malloc(sizeof(RCErrorContext));
 	
-	if(rpi_init(&rpi) == -1)
+	if(rpi_init(&rpi) == RC_EINIT)
 	{
-		perror("Failed to initialize Raspberry Pi context");
-		exit(EXIT_FAILURE);
+		rcerror(errcont, rpi, RC_EINIT, RC_EXIT);
 	}
 	
-	if(pc104_init(&pc104) == -1)
+	if(pc104_init(&pc104) == RC_EINIT)
 	{
-		perror("Failed to initialize PC104 context");
-		exit(EXIT_FAILURE);
+		rcerror(errcont, pc104, RC_EINIT, RC_EXIT);
 	}
 	
 	puts("\nInitialization successed");
