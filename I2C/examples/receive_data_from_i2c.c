@@ -7,52 +7,44 @@
 
 #include "../../RCC/rccore.h"
 #include "../../RCIP/rcip.h"
+#include "../rci2c.h"
 
 int main()
 {
     RPiContext *RPi;
     PC104Context *PC104;
+	RCErrorContext *errcont = malloc(sizeof(RCErrorContext));
 
     /*  initialize contexts */
     if(rpi_init(&RPi) == RC_EINIT)
     {
-		rcerror(RC_EINIT);
+		rcerror(errcont, RPi, RC_EINIT, RC_EXIT);
     }
 
     if(pc104_init(&PC104) == RC_EINIT)
     {
-		rcerror(RC_EINIT);
+		rcerror(errcont, PC104, RC_EINIT, RC_EXIT);
     }
 
     /*  open I2C connection */
-    int file_i2c;
-    if ((file_i2c = open(RPi->i2c_path, O_RDWR)) < 0)
-    {
-        perror("Failed to open the i2c bus");
-        exit(EXIT_FAILURE);
-    }
-
-    if (ioctl(file_i2c, I2C_SLAVE, PC104->i2c_slave_addr) < 0)
-    {
-        perror("Failed to access an i2c slave");
-        exit(EXIT_FAILURE);
-    }
+	int status;
+	if((status = open_i2c(RPi, PC104)) != RC_SUCCESS)
+	{
+		rcerror(errcont, RPi, status, RC_EXIT);		
+	}
 
 	/*	receive data from I2C	*/
-	int length = 4;
-	unsigned char *buffer = malloc(sizeof(unsigned char) * length);
-	while(1)
+	while(receive_from_slave_via_i2c(PC104) == RC_SUCCESS)
 	{
-		if(read(file_i2c, buffer, length) != length)
-		{
-			perror("Failed to read from i2c");
-			exit(EXIT_FAILURE);
-		}	
-		unsigned long numerical_part = atoi(buffer);
-		printf("Data read: %lu\n", numerical_part);
+		printf("Data read: %lu\n", PC104->distance_from_IR_sensor);	
 	}
-	
-	close(file_i2c);
+		
+	close(RPi->i2c_bus_descriptor);
+	rcerror(errcont, PC104, PC104->last_error, RC_CONT);	
+
+	free(errcont);
+	rpi_destruct(RPi);
+	pc104_destruct(PC104);
 
     return 0;
 }
