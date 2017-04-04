@@ -71,6 +71,17 @@ typedef struct PC104Context
 } PC104Context;
 
 
+/*	Global RoboCake error context.	*/
+/*	Contains the last library error, including identifier of the
+	context which caused an error.	*/
+typedef struct RCErrorContext
+{
+	rc_errcode_t last_error_code;
+	char *last_error_message;	
+	char *culprit_context;	
+} RCErrorContext;
+
+
 /*	RoboCake global error enumerator 	*/
 typedef enum RCErrorCode
 {
@@ -99,7 +110,6 @@ static char *RCErrorMessage[] = {
 	"Failed to send data via i2c",	/*	RC_I2C_EWRITE	*/
 	"Failed to receive data via i2c",	/*	RC_I2C_EREAD	*/
 	"Failed to access an i2c slave"	/*	RC_I2C_ESLAVE	*/
-
 };
 
 /*	contexts initializers and destructors declaration	*/
@@ -110,7 +120,7 @@ void pc104_destruct(PC104Context*);
 
 
 /*	TODO structures and functions for error handling	*/
-void rcerror(int);
+void rcerror(RCErrorContext*, void*, int);
 
 
 #endif

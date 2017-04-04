@@ -29,7 +29,7 @@ void rpi_destruct(RPiContext *rpi)
 int pc104_init(PC104Context **pc104)
 {
 	*pc104 = malloc(sizeof(PC104Context));
-	if(*pc104 == NULL) return RC_EALLOC;
+	if(*pc104 == NULL)	return RC_EALLOC;
 	
 	(*pc104)->identifier = _PC104_;
 	(*pc104)->version = PC104_VERSION;
@@ -46,9 +46,23 @@ void pc104_destruct(PC104Context *pc104)
 
 
 /*	Error handling	*/
-void rcerror(int errcode)
-{
+void rcerror(RCErrorContext *error_context, void* cuplrit, int errcode)
+{	
+	if(error_context == NULL) return RC_EINIT;
+	
+	/*	check which context	caused an error	*/
+	if(((RPiContext*)culprit)->identifier == _RASPBERRY_)
+	{
+		error_context->culprit_context = _RASPBERRY_;
+	}
+	else if(((PC104Context*)context)->identifier == _PC104_)
+	{
+		error_context->culprit_context = _PC104_;		
+	}
+	
+	error_context->last_error_code = errcode;
+	error_context->last_error_message = RCErrorMessage[errcode];
+
 	fprintf(stderr, "%s, error code: %d\n", RCErrorMessage[errcode], errcode);
-	exit(EXIT_FAILURE);
-}	
+}
 		
