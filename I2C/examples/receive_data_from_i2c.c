@@ -5,8 +5,8 @@
 #include <sys/ioctl.h>
 #include <linux/i2c-dev.h>
 
-#include "../RCC/rccore.h"
-#include "../RCIP/rcip.h"
+#include "../../RCC/rccore.h"
+#include "../../RCIP/rcip.h"
 
 int main()
 {
