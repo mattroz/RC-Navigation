@@ -29,7 +29,8 @@ int open_i2c(RPiContext *rpi, PC104Context *pc104)
 							I2C_SLAVE,
 							pc104->i2c_slave_addr);
 	if(access_stat < 0) 
-	{	
+	{
+		rpi->last_error = RC_I2C_ESLAVE;	
 		return RC_I2C_ESLAVE;
 	}
 	
@@ -44,6 +45,7 @@ int send_to_slave_via_i2c(RPiContext *rpi, int l_engine, int r_engine)
 	if(rpi == NULL) return RC_EINIT;
 	if(rpi->i2c_bus_descriptor < 0) 
 	{
+		rpi->last_error = RC_I2C_EOPEN;
 		return RC_I2C_EOPEN; 
 	}
 
@@ -52,6 +54,7 @@ int send_to_slave_via_i2c(RPiContext *rpi, int l_engine, int r_engine)
     int status =  wrap_instr_packet(&ipacket, l_engine, r_engine);
 	if(status != RC_SUCCESS) 
 	{
+		rpi->last_error = status;
 		return status;
 	}
 
@@ -59,6 +62,7 @@ int send_to_slave_via_i2c(RPiContext *rpi, int l_engine, int r_engine)
 	status = write(rpi->i2c_bus_descriptor, ipacket, sizeof *ipacket);
 	if(status != sizeof *ipacket) 
 	{
+		rpi->last_error = RC_I2C_EWRITE;
 		return RC_I2C_EWRITE;
 	}
 
