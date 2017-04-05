@@ -39,9 +39,9 @@ int create_pipe(RPiContext *rpi)
 int read_value_from_pipe(RPiContext *rpi, int *value)
 {
 	if(rpi == NULL)
-    {
-        return RC_EINIT;
-    }	
+    	{
+        	return RC_EINIT;
+    	}	
 
 	FILE *pipe_descriptor;
 
@@ -69,9 +69,9 @@ int read_value_from_pipe(RPiContext *rpi, int *value)
 int write_value_to_pipe(RPiContext *rpi, int value)
 {
 	if(rpi == NULL)
-    {
-        return RC_EINIT;
-    }
+    	{
+        	return RC_EINIT;
+    	}
 
 	FILE *pipe_descriptor;
 	
