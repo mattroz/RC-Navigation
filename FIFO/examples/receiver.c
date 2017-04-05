@@ -23,26 +23,26 @@ int main()
 	}
 
 	if(pc104_init(&PC104) == RC_EINIT)
-    {
-        rcerror(errcont, PC104, RC_EINIT, RC_EXIT);
-    }
+	{
+        	rcerror(errcont, PC104, RC_EINIT, RC_EXIT);
+	}
 
 
-    if(create_pipe(RPi) != RC_SUCCESS)
-    {
+    	if(create_pipe(RPi) != RC_SUCCESS)
+    	{
 		rcerror(errcont, RPi, RPi->last_error, RC_EXIT);
-    }
+    	}
 
 	int value;
-    while(1)
-    {	
+    	while(1)
+    	{	
 		if(read_value_from_pipe(RPi, &value) != RC_SUCCESS)
 		{
 			rcerror(errcont, RPi, RPi->last_error, RC_EXIT);
 		}
 	
 		printf("received: %d\n", value);
-    }
+    	}
 
 	pc104_destruct(PC104);
 	rpi_destruct(RPi);
