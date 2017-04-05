@@ -40,11 +40,12 @@ int main()
 	}
 		
 	close(RPi->i2c_bus_descriptor);
-	rcerror(errcont, PC104, PC104->last_error, RC_CONT);	
-
+	
 	free(errcont);
 	rpi_destruct(RPi);
 	pc104_destruct(PC104);
+	
+	rcerror(errcont, PC104, PC104->last_error, RC_CONT);	
 
 	return 0;
 }
