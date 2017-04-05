@@ -21,7 +21,7 @@ int create_pipe(RPiContext *rpi)
 
 	/*	create named pipe with presetted mode and the given name	*/
 	mode_t pipemode = 0666;
-	int status = mkfifo(rpi->pipe_path, pipemode);
+	mkfifo(rpi->pipe_path, pipemode);
 	
 	if(errno == EEXIST && errno != -1)
 	{
