@@ -38,8 +38,12 @@ int create_pipe(RPiContext *rpi)
  *--------------------------------------------------*/
 int read_value_from_pipe(RPiContext *rpi, int *value)
 {
+	if(rpi == NULL)
+    {
+        return RC_EINIT;
+    }	
+
 	FILE *pipe_descriptor;
-	int value;
 
 	/*	start listening to the pipe	*/
 	pipe_descriptor = fopen(rpi->pipe_path, "r");
@@ -64,6 +68,11 @@ int read_value_from_pipe(RPiContext *rpi, int *value)
  *--------------------------------------------------*/
 int write_value_to_pipe(RPiContext *rpi, int value)
 {
+	if(rpi == NULL)
+    {
+        return RC_EINIT;
+    }
+
 	FILE *pipe_descriptor;
 	
 	/*	open pipe for writing	*/	
