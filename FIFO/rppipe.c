@@ -82,7 +82,7 @@ int write_value_to_pipe(RPiContext *rpi, int value)
 	if(pipe_descriptor == NULL)
 	{
 		rpi->last_error = RC_PIPE_EWRITE;
-        return RC_PIPE_EWRITE;
+        	return RC_PIPE_EWRITE;
 	}
 	
 	/*	write value to the pipe and close it	*/
