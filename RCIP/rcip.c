@@ -9,8 +9,7 @@
  *	there is no need to write the same function for data packets	*/
 int wrap_instr_packet(rcip_instr_pack_t **packet, int leftval, int rightval)
 {
-	/*	allocate memory for a packet and handle allocation error	*/
-	*(packet) = malloc(sizeof(rcip_instr_pack_t));
+	/*	handle packet allocation error	*/
 	if(*packet == NULL)
 	{
 		return RC_EALLOC;		
