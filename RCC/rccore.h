@@ -105,10 +105,10 @@ typedef enum RCErrorCode
 	RC_PIPE_ECREATE,	/*	pipe creating error	*/		
 	RC_PIPE_EREAD,		/*	error reading value from pipe	*/
 	RC_PIPE_EWRITE,		/*	error writing value to pipe	*/		
-	RC_I2C_EOPEN,	/*	error opening i2c connection	*/
-	RC_I2C_EWRITE,	/*	error writing to slave via i2c	*/
-	RC_I2C_EREAD,	/*	error reading value from i2c	*/
-	RC_I2C_ESLAVE	/*	slave detection error	*/	
+	RC_I2C_EOPEN,		/*	error opening i2c connection	*/
+	RC_I2C_EWRITE,		/*	error writing to slave via i2c	*/
+	RC_I2C_EREAD,		/*	error reading value from i2c	*/
+	RC_I2C_ESLAVE		/*	slave detection error	*/	
 } rc_errcode_t;
 
 
@@ -121,9 +121,9 @@ static char *RCErrorMessage[] = {
 	"Failed reading value from pipe",	/*	RC_PIPE_EREAD	*/
 	"Failed writing value to pipe",		/*	RC_PIPE_EWRITE	*/
 	"Failed to access the i2c bus ",	/*	RC_I2C_EOPEN	*/
-	"Failed to send data via i2c",	/*	RC_I2C_EWRITE	*/
+	"Failed to send data via i2c",		/*	RC_I2C_EWRITE	*/
 	"Failed to receive data via i2c",	/*	RC_I2C_EREAD	*/
-	"Failed to access an i2c slave"	/*	RC_I2C_ESLAVE	*/
+	"Failed to access an i2c slave"		/*	RC_I2C_ESLAVE	*/
 };
 
 /*	contexts initializers and destructors declaration	*/
