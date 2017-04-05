@@ -1,20 +1,20 @@
 #ifndef RPPIPE_H
 #define RPPIPE_H
 
-extern const char *pipepath;
+#include "../RCC/rccore.h"
 
-/*	function for creating a pipe, returns EXIT_STATUS on success
- *	or some of mkfifo(3) error statuses	*/
-int create_pipe();	
+/*	Function for creating a pipe, returns error code 
+ *	according to enum at RCC/rccore.h	*/
+int create_pipe(RPiContext*);	
 
-/*	function for reading data from pipe. 
+/*	Function for reading data from pipe. 
  *	Reads one value at a time, returns 
- *	either value or EXIT_FAILURE on error */
-int read_value_from_pipe();
+ *	RC_PIPE_EREAD on read error, or RC_SUCCESS */
+int read_value_from_pipe(RPiContext*, int*);
 
 /*	function writes given value to the pipe.
- *	Returns EXIT_SUCCESS or EXIT_FAILURE, depends on
- *	what has happened there	*/
-int write_value_to_pipe(int);
+ *	Returns either RC_SUCCESS or RC_PIPE_EWRITE
+ *	on writing issues	*/
+int write_value_to_pipe(RPiContext*, int);
 
 #endif

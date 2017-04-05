@@ -9,71 +9,76 @@
 
 #include "../RCC/rccore.h"
 
-const char *pipepath = "/var/run/raspi_pipe";
-
 /*---------------------------------------
  *	define function for pipe creating
  *---------------------------------------*/
-int create_pipe()
+int create_pipe(RPiContext *rpi)
 {
+	if(rpi == NULL)
+	{
+		return RC_EINIT;
+	}	
+
 	/*	create named pipe with presetted mode and the given name	*/
 	mode_t pipemode = 0666;
-	int status = mkfifo(pipepath, pipemode);
+	int status = mkfifo(rpi->pipe_path, pipemode);
 	
 	if(errno == EEXIST && errno != -1)
 	{
 		return RC_SUCCESS;
 	}
-
-	return RC_EPIPE_CREATE;
+	
+	rpi->last_error = RC_PIPE_ECREATE;
+	return RC_PIPE_ECREATE;
 }
 
 
 /*---------------------------------------------------
  *  define function for reading value from the pipe
  *--------------------------------------------------*/
-int read_value_from_pipe()
+int read_value_from_pipe(RPiContext *rpi, int *value)
 {
 	FILE *pipe_descriptor;
 	int value;
 
-	/*	start to listen to the pipe	*/
-	pipe_descriptor = fopen(pipepath, "r");
+	/*	start listening to the pipe	*/
+	pipe_descriptor = fopen(rpi->pipe_path, "r");
 
 	/*	handle pipe opening error	*/
 	if(pipe_descriptor == NULL)
 	{
-		perror("Failed reading value from pipe");
-		exit(EXIT_FAILURE);	
+		rpi->last_error = RC_PIPE_EREAD;
+		return RC_PIPE_EREAD;
 	}
 	
 	/*	get value from the pipe, then close connection	*/
-	fscanf(pipe_descriptor, "%d", &value);
+	fscanf(pipe_descriptor, "%d", value);
 	fclose(pipe_descriptor);
 	
-	return value;		
+	return RC_SUCCESS;		
 }
 
 
 /*---------------------------------------------------
  *  define function for writing value to the pipe
  *--------------------------------------------------*/
-int write_value_to_pipe(int value)
+int write_value_to_pipe(RPiContext *rpi, int value)
 {
 	FILE *pipe_descriptor;
 	
 	/*	open pipe for writing	*/	
-	pipe_descriptor = fopen(pipepath, "w");
+	pipe_descriptor = fopen(rpi->pipe_path, "w");
 	
 	/*	handle pipe opening error	*/
 	if(pipe_descriptor == NULL)
 	{
-		return EXIT_FAILURE;
+		rpi->last_error = RC_PIPE_EWRITE;
+        return RC_PIPE_EWRITE;
 	}
 	
 	/*	write value to the pipe and close it	*/
 	fprintf(pipe_descriptor, "%d\n", value);
 	fclose(pipe_descriptor);
 
-	return EXIT_SUCCESS;
+	return RC_SUCCESS;
 }
