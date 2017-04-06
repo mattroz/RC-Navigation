@@ -1,9 +1,9 @@
-all: 	read write
+all: 	read.out write.out
 
-read:	usrf_pipe_read.c ../FIFO/rppipe.c ../SENSORS/rpsensors.c
-		gcc -Wall usrf_pipe_read.c ../FIFO/rppipe.c ../SENSORS/rpsensors.c -g -o ./read -lwiringPi
+read.out:	usrf_pipe_read.c ../../FIFO/rppipe.c ../../SENSORS/rpsensors.c ../../RCC/rccore.h
+		gcc usrf_pipe_read.c ../../FIFO/rppipe.c ../../SENSORS/rpsensors.c  ../../RCC/rccore.c -g -o ./read -lwiringPi
 
-write:	usrf_pipe_write.c ../FIFO/rppipe.c ../SENSORS/rpsensors.c
-		gcc -Wall usrf_pipe_write.c ../FIFO/rppipe.c ../SENSORS/rpsensors.c -g -o ./write -lwiringPi
+write.out:	usrf_pipe_write.c ../../FIFO/rppipe.c ../../SENSORS/rpsensors.c ../../RCC/rccore.c
+		gcc usrf_pipe_write.c ../../FIFO/rppipe.c ../../SENSORS/rpsensors.c ../../RCC/rccore.c -g -o ./write -lwiringPi
 
 		

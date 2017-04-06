@@ -133,17 +133,10 @@ int pc104_init(PC104Context**);
 void pc104_destruct(PC104Context*);
 
 
-<<<<<<< HEAD
-/*	RoboCake error handler.
- *	Takes global error context pointer, pointer to RPi or PC104 context,
- *	error code and exit flag (RC_EXIT, RC_CONT)	*/
-void rcerror(RCErrorContext*, void*, int, int);
-=======
 /*	RoboCake error handler.	*/
 /*	Takes global error context pointer, pointer to RPi or PC104 context
 	and exit flag (RC_EXIT, RC_CONT)	*/
 void rcerror(RCErrorContext*, void*, int);
->>>>>>> dev
 
 
 #endif

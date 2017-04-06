@@ -2,14 +2,18 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "../SENSORS/rpsensors.h"
-#include "../FIFO/rppipe.h"
+#include "../../SENSORS/rpsensors.h"
+#include "../../FIFO/rppipe.h"
+#include "../../RCC/rccore.h"
 
 int main()
 {
+	RPiContext *rpi;
+	rpi_init(&rpi);
+
 	/*	setup block	*/
 	setup_usrf();
-	if(create_pipe() != EXIT_SUCCESS)
+	if(create_pipe(rpi) != RC_SUCCESS)
 	{
 		perror("Failed to create pipe");
 		exit(EXIT_FAILURE);
@@ -20,7 +24,7 @@ int main()
 	while(1)
 	{
 		distance = get_distance_in_cm();
-		if(write_value_to_pipe(distance) == EXIT_FAILURE)
+		if(write_value_to_pipe(rpi, distance) == EXIT_FAILURE)
         {
             perror("Failed to write value to pipe\n");
             exit(EXIT_FAILURE);

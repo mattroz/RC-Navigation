@@ -1,17 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../rpsensors.h"
 
+#include "../rpsensors.h"
+#include "../../FIFO/rppipe.h"
+#include "../../RCC/rccore.h"
 
 int main()
 {
 	/*	setup block	*/
 	setup_usrf();
 
+	RPiContext *rpi;
+	rpi_init(&rpi);
+	
+	int data[2];
 	/*	data translation to output (potentionally, PIPE)	*/
 	while(1)
 	{
-		int distance = get_distance_in_cm();
-		printf("%d cm\n", distance);
+        data[1] = get_distance_in_cm();
+		data[1] = (data[1] > USRF_MAX_VAL_CM) ? data[0] : data[1];
+
+        printf("received: %d\n", data[1]);
+        data[0] = data[1];
 	}
 }
