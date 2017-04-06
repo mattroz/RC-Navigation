@@ -102,6 +102,7 @@ int receive_from_slave_via_i2c(PC104Context *pc104)
 	}
 
 	pc104->distance_from_IR_sensor = atoi(buffer);
-    
+	
+	free(buffer);    
 	return RC_SUCCESS;
 }
