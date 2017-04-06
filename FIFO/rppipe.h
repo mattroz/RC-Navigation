@@ -16,7 +16,7 @@ int create_pipe(RPiContext*);
  *	RC_PIPE_EREAD on read error, or RC_SUCCESS */
 int read_value_from_pipe(RPiContext*, int*);
 
-/*	function writes given value to the pipe.
+/*	Function writes given value to the pipe.
  *	Returns RC_EINIT if context is NULL, 
  *	RC_SUCCESS or RC_PIPE_EWRITE on writing issues	*/
 int write_value_to_pipe(RPiContext*, int);

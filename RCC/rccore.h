@@ -85,9 +85,9 @@ typedef struct PC104Context
 } PC104Context;
 
 
-/*	Global RoboCake error context.	*/
-/*	Contains the last library error, including identifier of the
-	context which caused an error.	*/
+/*	Global RoboCake error context.	
+ *	Contains the last library error, including identifier of the
+ *	context which caused an error.	*/
 typedef struct RCErrorContext
 {
 	int last_error_code;
@@ -133,9 +133,9 @@ int pc104_init(PC104Context**);
 void pc104_destruct(PC104Context*);
 
 
-/*	RoboCake error handler.	*/
-/*	Takes global error context pointer, pointer to RPi or PC104 context,
-	error code and exit flag (RC_EXIT, RC_CONT)	*/
+/*	RoboCake error handler.
+ *	Takes global error context pointer, pointer to RPi or PC104 context,
+ *	error code and exit flag (RC_EXIT, RC_CONT)	*/
 void rcerror(RCErrorContext*, void*, int, int);
 
 

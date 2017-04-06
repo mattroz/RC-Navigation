@@ -9,7 +9,8 @@
 #	define USRF_COEFF 58
 #endif
 
-/*	pins numeration according to WiringPi pinout, see pinout.xyz	*/
+/*	pins numeration according to WiringPi pinout, 
+ *	see pinout.xyz web site	*/
 const uint8_t PIN_USRF_TRIG = 5;
 const uint8_t PIN_USRF_ECHO = 4;
 

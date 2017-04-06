@@ -30,7 +30,7 @@ void rpi_destruct(RPiContext *rpi)
 int pc104_init(PC104Context **pc104)
 {
 	*pc104 = malloc(sizeof(PC104Context));
-	if(*pc104 == NULL)	return RC_EINIT;
+	if(*pc104 == NULL) return RC_EINIT;
 	
 	(*pc104)->identifier = _PC104_;
 	(*pc104)->version = PC104_VERSION;

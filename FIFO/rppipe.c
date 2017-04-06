@@ -9,9 +9,8 @@
 
 #include "../RCC/rccore.h"
 
-/*---------------------------------------
- *	define function for pipe creating
- *---------------------------------------*/
+
+/*	Define function for pipe creating	*/
 int create_pipe(RPiContext *rpi)
 {
 	if(rpi == NULL)
@@ -33,15 +32,13 @@ int create_pipe(RPiContext *rpi)
 }
 
 
-/*---------------------------------------------------
- *  define function for reading value from the pipe
- *--------------------------------------------------*/
+/*	Define function for reading value from the pipe	*/
 int read_value_from_pipe(RPiContext *rpi, int *value)
 {
 	if(rpi == NULL)
-    	{
-        	return RC_EINIT;
-    	}	
+	{
+		return RC_EINIT;
+	}	
 
 	FILE *pipe_descriptor;
 
@@ -63,15 +60,13 @@ int read_value_from_pipe(RPiContext *rpi, int *value)
 }
 
 
-/*---------------------------------------------------
- *  define function for writing value to the pipe
- *--------------------------------------------------*/
+/*	Define function for writing value to the pipe	*/
 int write_value_to_pipe(RPiContext *rpi, int value)
 {
 	if(rpi == NULL)
-    	{
-        	return RC_EINIT;
-    	}
+	{
+		return RC_EINIT;
+	}
 
 	FILE *pipe_descriptor;
 	
@@ -82,7 +77,7 @@ int write_value_to_pipe(RPiContext *rpi, int value)
 	if(pipe_descriptor == NULL)
 	{
 		rpi->last_error = RC_PIPE_EWRITE;
-        	return RC_PIPE_EWRITE;
+		return RC_PIPE_EWRITE;
 	}
 	
 	/*	write value to the pipe and close it	*/

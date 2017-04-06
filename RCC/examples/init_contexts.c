@@ -23,6 +23,7 @@ int main()
 	printf("\tRPi version: %d\n\tRPi I2C: %s\n\tRPi pipe: %s\n", rpi->version, rpi->i2c_path, rpi->pipe_path);
 	printf("\n\tPC104 version: %d\n\tPC104 i2c addr: 0x%X\n", pc104->version, pc104->i2c_slave_addr);
 
+	free(errcont);
 	rpi_destruct(rpi);
 	pc104_destruct(pc104);
 
