@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "rpsensors.c"
+#include "../rpsensors.h"
 
 
 int main()

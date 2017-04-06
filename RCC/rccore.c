@@ -54,7 +54,7 @@ void rcerror(RCErrorContext *error_context, void* culprit, int status)
 		context pointer, thats why this error is hadling separately)	*/
 	if(culprit == NULL || error_context == NULL)
 	{
-		fprintf(stderr, "\nError: context haven't been initialized, abort");
+		fprintf(stderr, "Error: context haven't been initialized, abort\n");
 		exit(EXIT_FAILURE);
 	}
 	
@@ -75,7 +75,8 @@ void rcerror(RCErrorContext *error_context, void* culprit, int status)
 		error_context->culprit_context = "UNKNOWN";
 		error_context->last_error_code = RC_EINIT;
 	}
-
+	
+	int errcode = error_context->last_error_code;
 	error_context->last_error_message = RCErrorMessage[errcode];
 		
 	puts("=========== ERROR ===========");
