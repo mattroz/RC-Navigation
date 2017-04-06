@@ -47,41 +47,38 @@ void pc104_destruct(PC104Context *pc104)
 
 
 /*	Error handling	*/
-void rcerror(RCErrorContext *error_context, void* culprit, int errcode, int status)
+void rcerror(RCErrorContext *error_context, void* culprit, int status)
 {	
-	/*	if we catch initialization error, we can't spot which context have failed 
-		('cause we have NULL pointers instead of context pointers, thats why this 
-		 error is hadling separately)	*/
-	if(errcode == RC_EINIT)
+	/*	if culprit context hadn't been initialized, there is no way to spot 
+		which context have failed ('cause we have NULL pointer instead of 
+		context pointer, thats why this error is hadling separately)	*/
+	if(culprit == NULL || error_context == NULL)
 	{
-		culprit = NULL;
-		status = RC_EXIT;
-	}
-	
-	if(error_context == NULL)
-	{
-		fprintf(stderr, "Error context haven't been initialized, abort");
+		fprintf(stderr, "Error: context haven't been initialized, abort\n");
 		exit(EXIT_FAILURE);
 	}
 	
-	/*	check which context	caused an error	(mad typecasting) */
+	/*	WARNING: POTENTIONALLY DANGER CODE (TODO think about refactoring it somehow)	*/
+	/*	check which context	caused an error	(mad typecasting) and set last error field. */
 	if((culprit != NULL) && (((RPiContext*)culprit)->identifier == _RASPBERRY_))
 	{
 		error_context->culprit_context = _RASPBERRY_;
+		error_context->last_error_code = ((RPiContext*)culprit)->last_error;
 	}
 	else if((culprit != NULL) && (((PC104Context*)culprit)->identifier == _PC104_))
 	{
 		error_context->culprit_context = _PC104_;		
+		error_context->last_error_code = ((PC104Context*)culprit)->last_error;
 	}
 	else
 	{
 		error_context->culprit_context = "UNKNOWN";
+		error_context->last_error_code = RC_EINIT;
 	}
-
-	/*	set members of error context	*/	
-	error_context->last_error_code = errcode;
-	error_context->last_error_message = RCErrorMessage[errcode];
 	
+	int errcode = error_context->last_error_code;
+	error_context->last_error_message = RCErrorMessage[errcode];
+		
 	puts("=========== ERROR ===========");
 	fprintf(stderr, "Message: %s\nContext: %s\nError code: %d\n", 
 					RCErrorMessage[errcode], 
