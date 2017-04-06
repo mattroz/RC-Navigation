@@ -51,7 +51,7 @@ int send_to_slave_via_i2c(RPiContext *rpi, int l_engine, int r_engine)
 
 	/*	wrap given values for engines to instruction packet	*/	
 	rcip_instr_pack_t *ipacket;
-    	int status =  wrap_instr_packet(&ipacket, l_engine, r_engine);
+	int status =  wrap_instr_packet(&ipacket, l_engine, r_engine);
 	if(status != RC_SUCCESS) 
 	{
 		rpi->last_error = status;
@@ -75,10 +75,10 @@ int send_to_slave_via_i2c(RPiContext *rpi, int l_engine, int r_engine)
 int receive_from_slave_via_i2c(PC104Context *pc104)
 {
 	 /*  check if context is not NULL and i2c connection've been opened  */
-    	if(pc104 == NULL) 
+	if(pc104 == NULL) 
 	{
 		return RC_EINIT;
-    	}
+	}
 
 	if(pc104->i2c_bus_descriptor < 0) 
 	{
@@ -87,7 +87,12 @@ int receive_from_slave_via_i2c(PC104Context *pc104)
 	}
 
 	int length = 4;
-    	unsigned char *buffer = malloc(sizeof(unsigned char) * length);
+	unsigned char *buffer = malloc(sizeof(unsigned char) * length);
+	if(buffer == NULL)
+	{
+		pc103->last_error = RC_EALLOC;
+		return RC_EALLOC;
+	}
 	
 	int status = read(pc104->i2c_bus_descriptor, buffer, length);
 	if(status != length) 
