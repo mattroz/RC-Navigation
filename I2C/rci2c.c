@@ -50,7 +50,7 @@ int send_to_slave_via_i2c(RPiContext *rpi, int l_engine, int r_engine)
 	}
 
 	/*	wrap given values for engines to instruction packet	*/	
-	rcip_instr_pack_t *ipacket;
+	rcip_instr_pack_t *ipacket = malloc(sizeof(rcip_instr_pack_t));
 	int status =  wrap_instr_packet(&ipacket, l_engine, r_engine);
 	if(status != RC_SUCCESS) 
 	{
@@ -59,8 +59,8 @@ int send_to_slave_via_i2c(RPiContext *rpi, int l_engine, int r_engine)
 	}
 
 	/*	try to send wrapped packet	*/
-	status = write(rpi->i2c_bus_descriptor, ipacket, sizeof *ipacket);
-	if(status != sizeof *ipacket) 
+	status = write(rpi->i2c_bus_descriptor, ipacket, sizeof(rcip_instr_pack_t));
+	if(status != sizeof(rcip_instr_pack_t)) 
 	{
 		rpi->last_error = RC_I2C_EWRITE;
 		return RC_I2C_EWRITE;
@@ -90,7 +90,7 @@ int receive_from_slave_via_i2c(PC104Context *pc104)
 	unsigned char *buffer = malloc(sizeof(unsigned char) * length);
 	if(buffer == NULL)
 	{
-		pc103->last_error = RC_EALLOC;
+		pc104->last_error = RC_EALLOC;
 		return RC_EALLOC;
 	}
 	
