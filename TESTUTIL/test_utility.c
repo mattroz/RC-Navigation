@@ -70,7 +70,6 @@ int main()
 	while((keycode = getc(stdin)) != ESC)
 	{
 		/*	send previous values	*/
-		send(rpi, engine_select, direction, power);
 
 		power = getc(stdin);
 		if(keycode == 10)	/*	if we caught newline, swap keycode and power, then getc power	*/
@@ -92,16 +91,19 @@ int main()
             	printf("keycode for A, %d\n", power);
             	engine_select = LEFT;
 				direction = BACKWARD;
+				send(rpi, engine_select, direction, power);
 				continue;
 			case E :
             	printf("keycode for E, %d\n", power);
             	engine_select = RIGHT;
 				direction = FORWARD;	
+				send(rpi, engine_select, direction, power);
 				continue;
 			case D :
             	printf("keycode for D, %d\n", power);
             	engine_select = RIGHT;
 				direction = BACKWARD;
+				send(rpi, engine_select, direction, power);
 				continue;
 			default:
 				printf("once again\n");
@@ -129,6 +131,7 @@ int send(RPiContext *_rpi, int es, int dir, int pow)
 			break;
 		case RIGHT:
 			right_engine_power = pow;
+			break;
 		default:
 			return -1;			
 	}
