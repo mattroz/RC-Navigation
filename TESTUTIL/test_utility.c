@@ -38,12 +38,11 @@ int send(RPiContext*, int, int, int);
 
 int main()
 {
-	/*	contexts	*/
 	RPiContext *rpi;
 	PC104Context *pc104;
 	RCErrorContext *errcont = malloc(sizeof(RCErrorContext));
 	
-	int keycode = A;
+	int keycode = -1;
 	int engine_select = 0;	/*	0 - left, 1 - right	*/
 	int direction = 1;		/*	0 - minus, 1 - plus	*/
 	int power = 0;
@@ -69,46 +68,46 @@ int main()
 	/*	get keycode and power and capitalize it	*/
 	while((keycode = getc(stdin)) != ESC)
 	{
-		/*	send previous values	*/
-
 		power = getc(stdin);
 		if(keycode == 10)	/*	if we caught newline, swap keycode and power, then getc power	*/
 		{
 			keycode = power;
-			power = getc(stdin);		
+			power = getc(stdin);
+			if(keycode == ESC)
+			{
+				return 0;
+			}
 		}
 
 		power += ascii_digit_offset;
 		switch(toupper(keycode))
 		{
+			
 			case Q :
-				printf("keycode for Q, %d\n", power);
+				printf("left engine, forward, power: %d\n", power);
 				engine_select = LEFT;
 				direction = FORWARD;
-				send(rpi, engine_select, direction, power);
-				continue;
+				break;
 			case A :
-            	printf("keycode for A, %d\n", power);
-            	engine_select = LEFT;
+				printf("left engine, backward, power: %d\n", power);
+				engine_select = LEFT;
 				direction = BACKWARD;
-				send(rpi, engine_select, direction, power);
-				continue;
+				break;
 			case E :
-            	printf("keycode for E, %d\n", power);
-            	engine_select = RIGHT;
+				printf("right engine, forward, power: %d\n", power);
+				engine_select = RIGHT;
 				direction = FORWARD;	
-				send(rpi, engine_select, direction, power);
-				continue;
+				break;
 			case D :
-            	printf("keycode for D, %d\n", power);
-            	engine_select = RIGHT;
+				printf("right engine, backward, power: %d\n", power);
+				engine_select = RIGHT;
 				direction = BACKWARD;
-				send(rpi, engine_select, direction, power);
-				continue;
+				break;
 			default:
-				printf("once again\n");
+				printf("wrong selection\n");
 				continue;
 		}
+		send(rpi, engine_select, direction, power);
 	}
 
 	rpi_destruct(rpi);
@@ -136,7 +135,7 @@ int send(RPiContext *_rpi, int es, int dir, int pow)
 			return -1;			
 	}
 
-	send_to_slave_via_i2c(_rpi, left_engine_power, right_engine_power);
+	int status = send_to_slave_via_i2c(_rpi, left_engine_power, right_engine_power);
 	
-	return 0;	
+	return status;	
 }
