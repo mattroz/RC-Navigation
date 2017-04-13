@@ -41,6 +41,7 @@ int main()
 	}	
 
 	close(RPi->i2c_bus_descriptor);
-		
+	free(errcont);		
+
 	return 0;
 }

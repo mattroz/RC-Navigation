@@ -55,6 +55,7 @@ int send_to_slave_via_i2c(RPiContext *rpi, int l_engine, int r_engine)
 	if(status != RC_SUCCESS) 
 	{
 		rpi->last_error = status;
+		free(ipacket);
 		return status;
 	}
 
@@ -63,6 +64,7 @@ int send_to_slave_via_i2c(RPiContext *rpi, int l_engine, int r_engine)
 	if(status != sizeof(rcip_instr_pack_t)) 
 	{
 		rpi->last_error = RC_I2C_EWRITE;
+		free(ipacket);
 		return RC_I2C_EWRITE;
 	}
 
