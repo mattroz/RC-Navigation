@@ -34,12 +34,12 @@ enum EDirection
 
 /*	functions prototype	*/
 int send(RPiContext*, int, int, int);
-
+void deallocate_all_members(RPiContext*, PC104Context*, RCErrorContext*);
 
 int main()
 {
-	RPiContext *rpi;
-	PC104Context *pc104;
+	RPiContext *rpi = NULL;
+	PC104Context *pc104 = NULL;
 	RCErrorContext *errcont = malloc(sizeof(RCErrorContext));
 	
 	int keycode = -1;
@@ -48,21 +48,24 @@ int main()
 	int power = 0;
 
 	/*  initialize contexts */
-    if(rpi_init(&rpi) == RC_EINIT)
-    {
-        rcerror(errcont, rpi, RC_EXIT);
-    }
+	if(rpi_init(&rpi) == RC_EINIT)
+	{
+		deallocate_all_members(rpi, pc104, errcont);
+		rcerror(errcont, rpi, RC_EXIT);
+	}
 
-    if(pc104_init(&pc104))
-    {
-        rcerror(errcont, pc104, RC_EXIT);
-    }
+	if(pc104_init(&pc104))
+	{	
+		deallocate_all_members(rpi, pc104, errcont);
+		rcerror(errcont, pc104, RC_EXIT);
+	}
     
     /*  open I2C connection */
-    if(open_i2c(rpi, pc104) != RC_SUCCESS)
-    {
-        rcerror(errcont, rpi, RC_EXIT);
-    }
+	if(open_i2c(rpi, pc104) != RC_SUCCESS)
+	{	
+		deallocate_all_members(rpi, pc104, errcont);
+		rcerror(errcont, rpi, RC_EXIT);
+	}
 
 
 	/*	get keycode and power and capitalize it	*/
@@ -75,6 +78,7 @@ int main()
 			power = getc(stdin);
 			if(keycode == ESC)
 			{
+				deallocate_all_members(rpi, pc104, errcont);
 				return 0;
 			}
 		}
@@ -110,9 +114,8 @@ int main()
 		send(rpi, engine_select, direction, power);
 	}
 
-	rpi_destruct(rpi);
-	pc104_destruct(pc104);
-	free(errcont);	
+	close(rpi->i2c_bus_descriptor);
+	deallocate_all_members(rpi, pc104, errcont);
 
 	return 0;
 }
@@ -138,4 +141,23 @@ int send(RPiContext *_rpi, int es, int dir, int pow)
 	int status = send_to_slave_via_i2c(_rpi, left_engine_power, right_engine_power);
 	
 	return status;	
+}
+
+
+void deallocate_all_members(RPiContext *_rpi, PC104Context *_pc104, RCErrorContext *_errcont)
+{
+	if(_rpi != NULL)
+	{	
+		rpi_destruct(_rpi);
+	}
+
+	if(_pc104 != NULL)
+	{
+		pc104_destruct(_pc104);
+	}
+
+	if(_errcont != NULL)
+	{
+		free(_errcont);
+	}
 }
