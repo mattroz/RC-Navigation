@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <ctype.h>
 
 #include "../I2C/rci2c.h"
 #include "../RCC/rccore.h"
@@ -50,21 +51,21 @@ int main()
 	/*  initialize contexts */
 	if(rpi_init(&rpi) == RC_EINIT)
 	{
+		rcerror(errcont, rpi, RC_CONT);
 		deallocate_all_members(rpi, pc104, errcont);
-		rcerror(errcont, rpi, RC_EXIT);
 	}
 
 	if(pc104_init(&pc104))
 	{	
+		rcerror(errcont, pc104, RC_CONT);
 		deallocate_all_members(rpi, pc104, errcont);
-		rcerror(errcont, pc104, RC_EXIT);
 	}
     
     /*  open I2C connection */
 	if(open_i2c(rpi, pc104) != RC_SUCCESS)
 	{	
+		rcerror(errcont, rpi, RC_CONT);
 		deallocate_all_members(rpi, pc104, errcont);
-		rcerror(errcont, rpi, RC_EXIT);
 	}
 
 
