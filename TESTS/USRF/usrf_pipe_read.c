@@ -7,8 +7,8 @@
 #include <fcntl.h>
 #include <errno.h>
 
-#include "../../FIFO/rppipe.h"
-#include "../../SENSORS/rpsensors.h"
+#include "../../FIFO/rcpipe.h"
+#include "../../SENSORS/rcsensors.h"
 #include "../../RCC/rccore.h"
 
 int main(void)

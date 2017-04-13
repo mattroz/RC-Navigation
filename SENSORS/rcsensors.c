@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <wiringPi.h>
 
-#include "rpsensors.h"
+#include "rcsensors.h"
 
 #ifndef USRF_COEFF
 #	define USRF_COEFF 58

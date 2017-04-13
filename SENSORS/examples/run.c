@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../rpsensors.h"
-#include "../../FIFO/rppipe.h"
+#include "../rcsensors.h"
+#include "../../FIFO/rcpipe.h"
 #include "../../RCC/rccore.h"
 
 int main()

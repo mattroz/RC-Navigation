@@ -7,7 +7,7 @@
 #include <fcntl.h>
 #include <errno.h>
 
-#include "../rppipe.h"
+#include "../rcpipe.h"
 #include "../../RCC/rccore.h"
 
 int main()

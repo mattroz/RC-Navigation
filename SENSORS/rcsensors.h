@@ -1,5 +1,5 @@
-#ifndef RPSENSORS_H
-#define RPSENSORS_H
+#ifndef RCSENSORS_H
+#define RCSENSORS_H
 
 #include <stdint.h>
 

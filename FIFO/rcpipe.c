@@ -8,7 +8,7 @@
 #include <errno.h>
 
 #include "../RCC/rccore.h"
-
+#include "rcpipe.h"
 
 /*	Define function for pipe creating	*/
 int create_pipe(RPiContext *rpi)

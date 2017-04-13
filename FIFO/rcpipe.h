@@ -1,5 +1,5 @@
-#ifndef RPPIPE_H
-#define RPPIPE_H
+#ifndef RCPIPE_H
+#define RCPIPE_H
 
 #include "../RCC/rccore.h"
 
