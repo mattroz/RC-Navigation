@@ -47,13 +47,21 @@ void pc104_destruct(PC104Context *pc104)
 
 
 /*	Error handling	*/
-void rcerror(RCErrorContext *error_context, void* culprit, int status)
+void rcerror(RCErrorContext *error_context, void *culprit, int status)
 {	
 	/*	if culprit context hadn't been initialized, there is no way to spot 
 		which context have failed ('cause we have NULL pointer instead of 
 		context pointer, thats why this error is hadling separately)	*/
 	if(culprit == NULL || error_context == NULL)
 	{
+		if(culprit != NULL)
+		{
+			free(culprit);
+		}
+		else
+		{
+			free(error_context);
+		}
 		fprintf(stderr, "Error: context haven't been initialized, abort\n");
 		exit(EXIT_FAILURE);
 	}
@@ -90,7 +98,7 @@ void rcerror(RCErrorContext *error_context, void* culprit, int status)
 	if(status == RC_EXIT) 
 	{
 		free(culprit);
-		free(errot_context);	
+		free(error_context);	
 		exit(EXIT_FAILURE);
 	}
 }
