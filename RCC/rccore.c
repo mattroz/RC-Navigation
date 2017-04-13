@@ -58,7 +58,7 @@ void rcerror(RCErrorContext *error_context, void* culprit, int status)
 		exit(EXIT_FAILURE);
 	}
 	
-	/*	WARNING: POTENTIONALLY DANGER CODE (TODO think about refactoring it somehow)	*/
+	/*	WARNING: POTENTIONALLY DANGEROUS CODE (TODO think about refactoring it somehow)	*/
 	/*	check which context	caused an error	(mad typecasting) and set last error field. */
 	if((culprit != NULL) && (((RPiContext*)culprit)->identifier == _RASPBERRY_))
 	{
@@ -88,7 +88,9 @@ void rcerror(RCErrorContext *error_context, void* culprit, int status)
 	
 	/*	if user threw exit flag, just exit after printing error message	*/
 	if(status == RC_EXIT) 
-	{	
+	{
+		free(culprit);
+		free(errot_context);	
 		exit(EXIT_FAILURE);
 	}
 }
