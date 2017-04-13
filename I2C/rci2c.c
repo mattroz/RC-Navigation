@@ -3,6 +3,7 @@
 #include <sys/ioctl.h>
 #include <linux/i2c-dev.h>
 #include <fcntl.h>
+#include <unistd.h>
 
 #include "rci2c.h"
 #include "../RCC/rccore.h"

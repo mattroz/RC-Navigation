@@ -33,9 +33,11 @@ enum EDirection
 	FORWARD = 1
 };
 
-/*	functions prototype	*/
+
+/*	functions prototypes	*/
 int send(RPiContext*, int, int, int);
 void deallocate_all_members(RPiContext*, PC104Context*, RCErrorContext*);
+
 
 int main()
 {
