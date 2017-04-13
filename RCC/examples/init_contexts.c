@@ -11,12 +11,12 @@ int main()
 	
 	if(rpi_init(&rpi) == RC_EINIT)
 	{
-		rcerror(errcont, rpi, RC_EINIT, RC_EXIT);
+		rcerror(errcont, rpi, RC_EXIT);
 	}
 	
 	if(pc104_init(&pc104) == RC_EINIT)
 	{
-		rcerror(errcont, pc104, RC_EINIT, RC_EXIT);
+		rcerror(errcont, pc104, RC_EXIT);
 	}
 	
 	puts("\nInitialization successed");
