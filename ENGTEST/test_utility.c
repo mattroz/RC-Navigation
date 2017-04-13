@@ -70,6 +70,7 @@ int main()
 		deallocate_all_members(rpi, pc104, errcont);
 	}
 
+	puts("====== INITIALIZATION SUCCESFULL ======");
 
 	/*	get keycode and power and capitalize it	*/
 	while((keycode = getc(stdin)) != ESC)
