@@ -15,7 +15,8 @@ int right(RPiContext*);
 int backward(RPiContext*);
 int forward(RPiContext*);
 int stop(RPiContext*);
-
+void turn_left(RPiContext*, int);
+void turn_right(RPiContext*, int);
 
 enum EDirections
 {
@@ -69,6 +70,8 @@ int main(int argc, char **argv)
 			if(last_command != STOP)
 			{
 				stop(RPi);
+				usleep(50000);
+				turn_left(RPi, 2);
 				last_command = STOP;
 			}
 		}
@@ -120,4 +123,16 @@ int stop(RPiContext *rpi)
 {
 	puts("STOP");
 	return send_to_slave_via_i2c(rpi, 0, 0);
+}
+
+void turn_left(RPiContext *rpi, int secs)
+{
+	left(rpi);
+	sleep(secs);
+}
+
+void turn_right(RPiContext *rpi, int secs)
+{
+	right(rpi);
+	sleep(secs);
 }
