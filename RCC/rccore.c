@@ -58,7 +58,7 @@ void rcerror(RCErrorContext *error_context, void *culprit, int status)
 		{
 			free(culprit);
 		}
-		else
+		else if(error_context != NULL)
 		{
 			free(error_context);
 		}
