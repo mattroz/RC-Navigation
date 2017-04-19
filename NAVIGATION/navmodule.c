@@ -69,9 +69,9 @@ int main(int argc, char **argv)
 		{
 			if(last_command != STOP)
 			{
-				stop(RPi);
-				usleep(50000);
-				turn_left(RPi, 2);
+				backward(RPi);
+				usleep(5000);
+				turn_left(RPi, 1);
 				last_command = STOP;
 			}
 		}
@@ -83,7 +83,6 @@ int main(int argc, char **argv)
 				last_command = FORWARD;
 			}
 		}
-		usleep(500);
 	}
 	
 	close(RPi->i2c_bus_descriptor);
@@ -110,13 +109,13 @@ int backward(RPiContext *rpi)
 int left(RPiContext *rpi)
 {	
 	puts("LEFT");
-	return send_to_slave_via_i2c(rpi, 0, ENG_VAL);
+	return send_to_slave_via_i2c(rpi, -ENG_VAL, ENG_VAL);
 }
 
 int right(RPiContext *rpi)
 {
 	puts("RIGHT");
-	return send_to_slave_via_i2c(rpi, ENG_VAL, 0);
+	return send_to_slave_via_i2c(rpi, ENG_VAL, -ENG_VAL);
 }
 
 int stop(RPiContext *rpi)
