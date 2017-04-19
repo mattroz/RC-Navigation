@@ -7,7 +7,7 @@
 #include "../I2C/rci2c.h"
 #include "../SENSORS/rcsensors.h"
 
-#define ENG_VAL 7
+#define ENG_VAL 5
 
 int left(RPiContext*);
 int right(RPiContext*);
@@ -64,9 +64,20 @@ int main(int argc, char **argv)
 	/*	receive data from ultrasonic sensor and change steering vector	*/
 	while(receive_from_slave_via_i2c(PC104) == RC_SUCCESS)
 	{
+		RPi->distance_from_USRF_sensor = get_distance_in_cm();
+		//printf("%d\n", RPi->distance_from_USRF_sensor);
 		printf("%d\n", PC104->distance_from_IR_sensor);
+		
+		/*	check if we have an obstacle in front of the robot	*/
+		if(RPi->distance_from_USRF_sensor <= 10)
+		{
+			stop(RPi);
+			sleep(1);
+			right(RPi);
+			continue;
+		}
 	
-		if((PC104->distance_from_IR_sensor >= 7) && (PC104->distance_from_IR_sensor <= 13))
+		if((PC104->distance_from_IR_sensor >= 7) && (PC104->distance_from_IR_sensor <= 12))
 		{
 			forward(RPi);
 			continue;
@@ -102,7 +113,7 @@ int forward(RPiContext* rpi)
 	{	
 		puts("FORWARD");
 		last_command = FORWARD;
-		return send_to_slave_via_i2c(rpi, ENG_VAL, ENG_VAL);	
+		return send_to_slave_via_i2c(rpi, ENG_VAL+3, ENG_VAL+3);	
 	}
 	return 0;
 }
@@ -124,7 +135,7 @@ int left(RPiContext *rpi)
 	{
 		puts("LEFT");
 		last_command = LEFT;
-		return send_to_slave_via_i2c(rpi, 0, ENG_VAL);
+		return send_to_slave_via_i2c(rpi, -ENG_VAL, ENG_VAL);
 	}
 	return 0;
 }
@@ -135,7 +146,7 @@ int right(RPiContext *rpi)
 	{
 		puts("RIGHT");
 		last_command = RIGHT;
-		return send_to_slave_via_i2c(rpi, ENG_VAL, 0);
+		return send_to_slave_via_i2c(rpi, ENG_VAL, -ENG_VAL);
 	}
 	return 0;
 }
