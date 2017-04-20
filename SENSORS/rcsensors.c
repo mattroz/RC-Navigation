@@ -4,6 +4,7 @@
 #include <wiringPi.h>
 
 #include "rcsensors.h"
+#include "../RCC/rccore.h"
 
 #ifndef USRF_COEFF
 #	define USRF_COEFF 58
@@ -26,9 +27,15 @@ void setup_usrf()
 	delay(30);
 }
 
-
-int get_distance_in_cm() 
+/*	Get distance from ultrasonic rangefinder 
+ *	which is located on RPi board	*/
+int get_distance_USRF(RPiContext *rpi)
 {
+	if(rpi == NULL)
+	{
+		return RC_EINIT;
+	}
+
 	/*	send pulse to trig pin	*/
 	digitalWrite(PIN_USRF_TRIG, HIGH);
 	delayMicroseconds(20);
@@ -46,6 +53,7 @@ int get_distance_in_cm()
 
 	/*	convert distance in cm	*/
 	int distance = travelTime / USRF_COEFF;
+	rpi->distance_from_USRF_sensor = distance;
 
-	return distance;
+	return RC_SUCCESS;
 }
