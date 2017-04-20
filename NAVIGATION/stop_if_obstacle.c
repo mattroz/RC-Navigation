@@ -63,8 +63,13 @@ int main(int argc, char **argv)
 
 	int last_command = STOP;
 	/*	receive data from ultrasonic sensor and change steering vector	*/
-	while((RPi->distance_from_USRF_sensor = get_distance_in_cm()) > 2)	
+	while(get_distance_USRF(RPi) == RC_SUCCESS)	
 	{
+		if(RPi->distance_from_USRF_sensor <= 5)
+		{
+			break;	
+		}
+
 		if(RPi->distance_from_USRF_sensor < 15)
 		{
 			if(last_command != STOP)
