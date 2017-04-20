@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 	/*	receive data from ultrasonic sensor and change steering vector	*/
 	while(receive_from_slave_via_i2c(PC104) == RC_SUCCESS)
 	{
-		RPi->distance_from_USRF_sensor = get_distance_in_cm();
+		get_distance_USRF(RPi);
 		//printf("%d\n", RPi->distance_from_USRF_sensor);
 		printf("%d\n", PC104->distance_from_IR_sensor);
 		
