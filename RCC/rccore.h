@@ -81,6 +81,7 @@ typedef struct PC104Context
 	uint16_t i2c_slave_addr;
 	int i2c_bus_descriptor;
 	unsigned long distance_from_IR_sensor;
+	uint16_t battery_voltage_mV;
 	uint8_t last_error;
 } PC104Context;
 
