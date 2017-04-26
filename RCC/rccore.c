@@ -46,6 +46,25 @@ void pc104_destruct(PC104Context *pc104)
 }
 
 
+/*	Error context initializer and destructor	*/
+int error_context_init(RCErrorContext **errcont)
+{
+	*errcont = malloc(sizeof(RCErrorContext));
+	if(errcont == NULL)	return RC_EINIT;
+
+	(*errcont)->last_error_code = -1;
+	(*errcont)->last_error_message = "-1";
+
+	return RC_SUCCESS;
+}
+
+
+void error_context_destruct(RCErrorContext *errcont)
+{
+	free(errcont);
+}
+
+
 /*	Error handling	*/
 void rcerror(RCErrorContext *error_context, void *culprit, int status)
 {	

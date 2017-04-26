@@ -131,7 +131,8 @@ int rpi_init(RPiContext**);
 void rpi_destruct(RPiContext*);
 int pc104_init(PC104Context**);
 void pc104_destruct(PC104Context*);
-
+int error_context_init(RCError**);
+void error_context_destruct(RCError*);
 
 /*	RoboCake error handler.	*/
 /*	Takes global error context pointer, pointer to RPi or PC104 context
