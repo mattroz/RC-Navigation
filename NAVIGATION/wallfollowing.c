@@ -32,28 +32,28 @@ int main(int argc, char **argv)
 	/*	INITIALIZATION PART	*/
 	RPiContext *RPi;
 	PC104Context *PC104;
-	RCErrorContext *errcontext = malloc(sizeof(RCErrorContext));
+	RCErrorContext *errcont;
 	
-	if(errcontext == NULL)
+	if(error_context_init(&errcont) != RC_SUCCESS)
 	{
-		rcerror(errcontext, NULL, RC_EXIT);
+		rcerror(errcont, NULL, RC_EXIT);
 	}
 
 	if(rpi_init(&RPi) != RC_SUCCESS)
 	{	
-		rcerror(errcontext, RPi, RC_EXIT);		
+		rcerror(errcont, RPi, RC_EXIT);		
 	}
 	
 	if(pc104_init(&PC104) != RC_SUCCESS)
 	{
-		rcerror(errcontext, PC104, RC_CONT);
+		rcerror(errcont, PC104, RC_CONT);
 		rpi_destruct(RPi);
 	}
 	
 	if(open_i2c(RPi, PC104) != RC_SUCCESS)
 	{
 		pc104_destruct(PC104);
-		rcerror(errcontext, RPi, RC_EXIT);
+		rcerror(errcont, RPi, RC_EXIT);
 	}
 	
 	setup_usrf();
@@ -90,7 +90,7 @@ int main(int argc, char **argv)
 	close(RPi->i2c_bus_descriptor);
 	rpi_destruct(RPi);
 	pc104_destruct(PC104);
-	free(errcontext);
+	error_context_destruct(errcont);
 
 	return 0;
 }

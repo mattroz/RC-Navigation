@@ -13,9 +13,14 @@ int main()
 {
 	RPiContext *RPi;
 	PC104Context *PC104;
-	RCErrorContext *errcont = malloc(sizeof(RCErrorContext));
+	RCErrorContext *errcont;
 
 	/*	initialize contexts	*/
+	if(error_context_init(&errcont) == RC_EINIT)
+	{
+		rcerror(errcont, NULL, RC_EXIT);
+	}
+
 	if(rpi_init(&RPi) == RC_EINIT)
 	{
 		rcerror(errcont, RPi, RC_EXIT);
@@ -23,12 +28,14 @@ int main()
 	
 	if(pc104_init(&PC104) == RC_EINIT)
 	{
-		rcerror(errcont, RPi, RC_EXIT);
+		rpi_destruct(RPi);
+		rcerror(errcont, PC104, RC_EXIT);
 	}
 	
 	/*	open I2C connection	*/	
 	if(open_i2c(RPi, PC104) != RC_SUCCESS)
 	{
+		pc104_destruct(PC104);
 		rcerror(errcont, RPi, RC_EXIT);
 	}
 
@@ -41,7 +48,9 @@ int main()
 	}	
 
 	close(RPi->i2c_bus_descriptor);
-	free(errcont);		
+	rpi_destruct(RPi);
+	pc104_destruct(PC104);
+	error_context_destruct(errcont);
 
 	return 0;
 }

@@ -43,7 +43,7 @@ int main()
 {
 	RPiContext *rpi = NULL;
 	PC104Context *pc104 = NULL;
-	RCErrorContext *errcont = malloc(sizeof(RCErrorContext));
+	RCErrorContext *errcont = NULL;
 	
 	int keycode = -1;
 	int engine_select = 0;	/*	0 - left, 1 - right	*/
@@ -51,6 +51,11 @@ int main()
 	int power = 0;
 
 	/*  initialize contexts */
+	if(error_context_init(&errcont) == RC_EINIT)
+	{
+		rcerror(errcont, NULL, RC_EXIT);
+	}
+
 	if(rpi_init(&rpi) == RC_EINIT)
 	{
 		rcerror(errcont, rpi, RC_CONT);
