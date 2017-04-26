@@ -89,8 +89,10 @@ int receive_from_slave_via_i2c(PC104Context *pc104)
 		return RC_I2C_EOPEN;
 	}
 
-	int length = 4;
+	/*	1 space, 2 chars for IR distance, 4 chars for voltage + 2 "\n"s	*/
+	int length = 11;
 	unsigned char *buffer = malloc(sizeof(unsigned char) * length);
+
 	if(buffer == NULL)
 	{
 		pc104->last_error = RC_EALLOC;
@@ -100,11 +102,14 @@ int receive_from_slave_via_i2c(PC104Context *pc104)
 	int status = read(pc104->i2c_bus_descriptor, buffer, length);
 	if(status != length) 
 	{
+		free(buffer);
 		pc104->last_error = RC_I2C_EREAD;
 		return RC_I2C_EREAD;
 	}
 
-	pc104->distance_from_IR_sensor = atoi(buffer);
+	char *next_char = NULL;
+	pc104->distance_from_IR_sensor = strtol(buffer, &next_char, 10);
+	pc104->battery_voltage_mV = strtol(next_char, &next_char, 10);
 	
 	free(buffer);    
 	return RC_SUCCESS;
