@@ -68,12 +68,12 @@ void rcerror(RCErrorContext *error_context, void *culprit, int status)
 	
 	/*	WARNING: POTENTIONALLY DANGEROUS CODE (TODO think about refactoring it somehow)	*/
 	/*	check which context	caused an error	(mad typecasting) and set last error field. */
-	if((culprit != NULL) && (((RPiContext*)culprit)->identifier == _RASPBERRY_))
+	if((((RPiContext*)culprit)->identifier == _RASPBERRY_))
 	{
 		error_context->culprit_context = _RASPBERRY_;
 		error_context->last_error_code = ((RPiContext*)culprit)->last_error;
 	}
-	else if((culprit != NULL) && (((PC104Context*)culprit)->identifier == _PC104_))
+	else if((((PC104Context*)culprit)->identifier == _PC104_))
 	{
 		error_context->culprit_context = _PC104_;		
 		error_context->last_error_code = ((PC104Context*)culprit)->last_error;
