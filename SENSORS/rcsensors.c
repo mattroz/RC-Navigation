@@ -15,7 +15,7 @@
 const uint8_t PIN_USRF_TRIG = 5;
 const uint8_t PIN_USRF_ECHO = 4;
 
-void setup_usrf()
+void setup_USRF()
 {
 	/*	setup ultrasonic pins	*/
 	wiringPiSetup();

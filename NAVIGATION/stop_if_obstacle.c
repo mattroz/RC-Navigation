@@ -57,7 +57,7 @@ int main(int argc, char **argv)
 		rcerror(errcont, RPi, RC_EXIT);
 	}
 	
-	setup_usrf();
+	setup_USRF();
 	/*	INITIALIZATION END	*/
 		
 

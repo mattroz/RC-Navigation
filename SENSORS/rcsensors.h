@@ -15,7 +15,7 @@ const uint8_t PIN_USRF_TRIG;
 const uint8_t PIN_USRF_ECHO;
 
 /*	HC-SR04 functions declarations	*/
-void setup_usrf();
+void setup_USRF();
 int get_distance_USRF(RPiContext*);
 
 

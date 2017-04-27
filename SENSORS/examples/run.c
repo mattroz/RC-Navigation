@@ -8,7 +8,7 @@
 int main()
 {
 	/*	setup block	*/
-	setup_usrf();
+	setup_USRF();
 
 	RPiContext *rpi;
 	RCErrorContext *errcont;
