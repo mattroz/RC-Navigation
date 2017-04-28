@@ -21,7 +21,7 @@ int main()
 	{
 		if(get_distance_USRF(rpi) == RC_EINIT)
 		{
-			rcerror(errcontext, rpi, RC_EXIT);
+			rcerror(errcont, rpi, RC_EXIT);
 		}
      
 		data[1] = rpi->distance_from_USRF_sensor;

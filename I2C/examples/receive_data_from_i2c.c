@@ -41,20 +41,14 @@ int main()
 	}
 
 	/*	receive data from I2C	*/
-//	while(receive_from_slave_via_i2c(PC104) == RC_SUCCESS)
-//	{
-		if(receive_from_slave_via_i2c(PC104) != RC_SUCCESS)
-		{
-			rcerror(errcont, PC104, RC_CONT);
-		}
+	while(receive_from_slave_via_i2c(PC104) == RC_SUCCESS)
+	{
 		printf("\nData read: %d\nVoltage: %d\n", 
 					PC104->distance_from_IR_sensor,
 					PC104->battery_voltage_mV);	
-//	}
+	}
 		
-	close(RPi->i2c_bus_descriptor);
-	
-	
+	close(RPi->i2c_bus_descriptor);	
 	rpi_destruct(RPi);
 	pc104_destruct(PC104);
 	error_context_destruct(errcont);	
