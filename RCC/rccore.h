@@ -41,7 +41,7 @@
 #endif
 
 #ifndef DEFAULT_PC104_I2C_SLAVE_ADDR
-#	define DEFAULT_PC104_I2C_SLAVE_ADDR 0x02
+#	define DEFAULT_PC104_I2C_SLAVE_ADDR 0x03
 #else
 #   error "Multiple definitions detected, should be defined once"
 #endif
